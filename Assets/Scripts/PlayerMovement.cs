@@ -5,10 +5,14 @@ public class PlayerMovement : MonoBehaviour {
 
     public MapGeneration map;
 
+    public Vector3 startPoint;
+
     private int currentX;
     private int currentY;
 
     private bool isMoving = false;
+
+    private string direction = "right";
 
     public void FindStartPoint()
     {
@@ -16,54 +20,111 @@ public class PlayerMovement : MonoBehaviour {
         {
             for (int y = 0; y < map.height; y++)
             {
-                if (map.tileMap[x][y] == 0)
+                if (MapGeneration.tileMap[x][y] == 0)
                 {
                     currentX = x;
                     currentY = y;
-                    transform.position = new Vector3(x + 0.5f, 0.1f, y + 0.5f);
+                    transform.position = new Vector3(x + 0.5f, y + 0.5f, 0.1f);
                     return;
                 }
             }
         }
+        startPoint = transform.position;
     }
 
     void Update()
     {
         if (isMoving)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, 0.1f, currentY + 0.5f), 0.1f);
-
-            if ((int)transform.position.x == (int)currentX && (int)transform.position.z == (int)currentY)
+            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f), 0.1f);
+            if (Mathf.Abs(transform.position.x - (currentX +0.5f)) <0.2f && Mathf.Abs(transform.position.y - (currentY+0.5f)) < 0.2f)
             {
+                transform.position = new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f);
                 isMoving = false;
             }
-            return;
+            
         }
         int hInput = (int)Input.GetAxisRaw("Horizontal");
-        Debug.Log(hInput);
-        if(hInput == 0)
+        if(hInput == 1)
         {
-            return;
+            direction = "right";
+        }else if(hInput == -1)
+        {
+            direction = "left";
+        }
+        int vInput = (int)Input.GetAxisRaw("Vertical");
+        if(vInput == 1)
+        {
+            direction = "up";
+        }else if (vInput == -1)
+        {
+            direction = "down";
+        }
+        if (!isMoving)
+        {
+            if (direction == "right")
+            {
+                if (CheckForObstruction(currentX + 1, currentY))
+                {
+                    currentX += 1;
+                    isMoving = true;
+                }
+                else
+                {
+                    direction = "";
+                }
+            }
+            else if (direction == "left")
+            {
+                if (CheckForObstruction(currentX - 1, currentY))
+                {
+                    currentX -= 1;
+                    isMoving = true;
+                }
+                else
+                {
+                    direction = "";
+                }
+            }
+            else if (direction == "up")
+            {
+                if (CheckForObstruction(currentX, currentY + 1))
+                {
+                    currentY += 1;
+                    isMoving = true;
+                }
+                else
+                {
+                    direction = "";
+                }
+            }
+            else if (direction == "down")
+            {
+                if (CheckForObstruction(currentX, currentY - 1))
+                {
+                    currentY -= 1;
+                    isMoving = true;
+                }
+                else
+                {
+                    direction = "";
+                }
+            }
         }
 
-        if (CheckForObstruction(currentX + hInput, currentY))
-        {
-            currentX += hInput;
-            isMoving = true;
-        }
+        
     }
 	
     bool CheckForObstruction(int x, int y)
     {
-        Debug.Log(map.tileMap[x][y]);
-        if (map.tileMap[x][y] == 1 || map.tileMap[x][y] == 0)
+        if (MapGeneration.tileMap[x][y] == 0)
         {
 
             return true;
         }else
         {
 
-            return true;
+            return false;
         }
     }
 }
