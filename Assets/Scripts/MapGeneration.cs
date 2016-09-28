@@ -20,7 +20,12 @@ public class MapGeneration : MonoBehaviour {
     public Texture2D mapImage;
 
     public static int[][] tileMap;
-    
+
+    public static MapGeneration singleton;
+    void Awake()
+    {
+        singleton = this;
+    }
     void Start()
     {
         tileMap = new int[width][];
