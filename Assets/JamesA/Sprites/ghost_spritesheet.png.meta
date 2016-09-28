@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: dd80b321d9a89ea48b662992d51db655
-timeCreated: 1475078828
+guid: 50f7de609c3c72a4b8fba51277b86a41
+timeCreated: 1475079791
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: maze_spritesheet_0
-    21300002: maze_spritesheet_1
-    21300004: maze_spritesheet_2
-    21300006: maze_spritesheet_3
-    21300008: maze_spritesheet_4
-    21300010: maze_spritesheet_5
+    21300000: ghost_spritesheet_0
+    21300002: ghost_spritesheet_1
+    21300004: ghost_spritesheet_2
+    21300006: ghost_spritesheet_3
+    21300008: ghost_spritesheet_4
+    21300010: ghost_spritesheet_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,11 +32,11 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -50,7 +50,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 40
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -59,7 +59,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: maze_spritesheet_0
+      name: ghost_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -72,7 +72,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: maze_spritesheet_1
+      name: ghost_spritesheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -85,7 +85,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: maze_spritesheet_2
+      name: ghost_spritesheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -98,7 +98,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: maze_spritesheet_3
+      name: ghost_spritesheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -111,7 +111,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: maze_spritesheet_4
+      name: ghost_spritesheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -124,7 +124,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: maze_spritesheet_5
+      name: ghost_spritesheet_5
       rect:
         serializedVersion: 2
         x: 160
