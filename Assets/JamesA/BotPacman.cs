@@ -9,6 +9,8 @@ public class BotPacman : MonoBehaviour {
 	float moveTimer;
 	public float percentDist;
 
+
+	static Vector3 offset = new Vector3 (0.5f, 0.5f, 0);
 	static Vector3[] dirVects = new Vector3[4];
 
 	public int val;
@@ -60,7 +62,7 @@ public class BotPacman : MonoBehaviour {
 
 		}
 		percentDist = (moveTimer / tileMoveTime);
-		thisTransform.position = Vector3.Lerp (lastPos, targetPos, percentDist);
+		thisTransform.position = offset+Vector3.Lerp (lastPos, targetPos, percentDist);
 	}
 
 	int GetNodeTypeAtPosition (Vector3 pos){
@@ -122,8 +124,8 @@ public class BotPacman : MonoBehaviour {
 		} else if (validTiles == 2) {
 			print ("1 option");
 			// we have only 1 option, we must keep going...
-			// set the last direction we went in to false
-			dirs [moveDir] = false;
+			// set the opposite directon to false
+			dirs [(moveDir+2)%4] = false;
 			// we can't go back the way we came!
 			for (int i = 0; i < 4; i++) {
 				if (dirs [i] == true) {
@@ -138,7 +140,8 @@ public class BotPacman : MonoBehaviour {
 		} else {
 			print ("2 options");
 			// TODO make this move towards the player
-			dirs [moveDir] = false;
+			// set the opposite directon to false
+			dirs [(moveDir+2)%4] = false;
 			// currently just picks the first available direction
 			for (int i = 0; i < 4; i++) {
 				if (dirs [i] == true) {
@@ -151,6 +154,8 @@ public class BotPacman : MonoBehaviour {
 				}
 			}
 		}
+
+		print ("going in direction: " + moveDir);
 
 	}
 
