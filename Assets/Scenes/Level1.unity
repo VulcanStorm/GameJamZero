@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1853163178}
+  startPoint: {x: 0, y: 0, z: 0}
 --- !u!4 &1495722376 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000010474512890, guid: 26277ada86fac75488bf808c33078a7c,
@@ -331,15 +332,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3845e7b7b812e4ca962a39ab0bc949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 60
-  height: 60
+  width: 24
+  height: 24
   tilePrefab: {fileID: 1000013061266250, guid: 17569e9255300e946817b9f6dc2ed7e6, type: 2}
   playerObject: {fileID: 1495722372}
   tiles:
   - number: 0
+    colour:
+      serializedVersion: 2
+      rgba: 4294967295
     texture: {fileID: 21300000, guid: dd80b321d9a89ea48b662992d51db655, type: 3}
   - number: 1
+    colour:
+      serializedVersion: 2
+      rgba: 4278190080
     texture: {fileID: 21300002, guid: dd80b321d9a89ea48b662992d51db655, type: 3}
+  mapImage: {fileID: 2800000, guid: beb27af475c56ae4c986b3328842b801, type: 3}
 --- !u!4 &1853163179
 Transform:
   m_ObjectHideFlags: 0
