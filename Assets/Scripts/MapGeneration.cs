@@ -33,18 +33,23 @@ public class MapGeneration : MonoBehaviour {
         {
             tileMap[i] = new int[height];
         }
-        CreateMap();
+        ReadFromImage();
+        //CreateMap();
     }
     void ReadFromImage()
     {
         Color32[] pixels = mapImage.GetPixels32();
+        height = mapImage.height;
+        width = mapImage.width;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                
+                DrawTiles(0, i, j, pixels[j * height + i], true);
             }
         }
+        playerObject.GetComponent<PlayerMovement>().FindStartPoint();
+
     }
     void CreateMap()
     {
@@ -85,6 +90,8 @@ public class MapGeneration : MonoBehaviour {
             {
                 if (t.colour.Equals(pixelColour))
                 {
+                    tileMap[x][y] = t.number;
+
                     Instantiate(tilePrefab);
                     tilePrefab.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
                     tilePrefab.GetComponent<SpriteRenderer>().sprite = t.texture;
