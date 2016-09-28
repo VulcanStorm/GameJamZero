@@ -3,9 +3,6 @@ using System.Collections;
 
 public class BotPacman : MonoBehaviour {
 
-	// TODO make this a static singleton
-	public MapGeneration gen;
-
 	// How many tiles we should move per second
 	public static float speed = 2;
 	public float tileMoveTime;
@@ -67,15 +64,15 @@ public class BotPacman : MonoBehaviour {
 	}
 
 	int GetNodeTypeAtPosition (Vector3 pos){
-		if (pos.x < 0 || pos.x >= gen.width) {
+		if (pos.x < 0 || pos.x >= MapGeneration.singleton.width) {
 			return 0;
-		} else if (pos.y < 0 || pos.y >= gen.height) {
+		} else if (pos.y < 0 || pos.y >= MapGeneration.singleton.height) {
 			return 0;
-		} else if (gen.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)] == 0) {
-			print (gen.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
+		} else if (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)] == 0) {
+			print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
 			return 1;
 		} else {
-			print (gen.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
+			print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
 			return 0;
 		}
 	}
