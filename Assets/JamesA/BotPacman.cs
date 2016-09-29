@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BotPacman : MonoBehaviour {
 
+	public Animator anim;
+
 	// How many tiles we should move per second
 	public static float speed = 2;
 	public float tileMoveTime;
@@ -28,6 +30,7 @@ public class BotPacman : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		anim = this.GetComponent<Animator> ();
 		thisTransform = this.transform;
 		tileMoveTime = 1 / speed;
 		dirVects [0] = Vector3.up;
@@ -55,10 +58,13 @@ public class BotPacman : MonoBehaviour {
 			// decide where to go
 			ChooseNextTarget();
 
+			// set the animation direction
+			anim.SetInteger("direction",moveDir);
+
 			// set the new move direction
 			moveVect = targetPos - lastPos;
 			// reset the lerp timer
-			moveTimer = 0;
+			moveTimer -=tileMoveTime;
 
 		}
 		percentDist = (moveTimer / tileMoveTime);
@@ -71,10 +77,10 @@ public class BotPacman : MonoBehaviour {
 		} else if (pos.y < 0 || pos.y >= MapGeneration.singleton.height) {
 			return 0;
 		} else if (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)] == 0) {
-			print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
+			//print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
 			return 1;
 		} else {
-			print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
+			//print (MapGeneration.tileMap [Mathf.RoundToInt (pos.x)] [Mathf.RoundToInt (pos.y)]);
 			return 0;
 		}
 	}
@@ -115,14 +121,14 @@ public class BotPacman : MonoBehaviour {
 
 
 		if (validTiles == 1) {
-			print ("dead end");
+			//print ("dead end");
 			// this must have been a dead end... therefore go back
 			// we want to go 1 tile back in the opposite direction we came...
 			targetPos = lastPos - dirVects[moveDir];
 			// set the opposite move direction
 			moveDir = (moveDir + 2) % 4;
 		} else if (validTiles == 2) {
-			print ("1 option");
+			//print ("1 option");
 			// we have only 1 option, we must keep going...
 			// set the opposite directon to false
 			dirs [(moveDir+2)%4] = false;
@@ -138,9 +144,11 @@ public class BotPacman : MonoBehaviour {
 				}
 			}
 		} else {
-			print ("2 options");
+			//print ("2 options");
 			// TODO make this move towards the player
+			// need to know where the player is
 			// set the opposite directon to false
+			// pick a random direction
 			dirs [(moveDir+2)%4] = false;
 			// currently just picks the first available direction
 			for (int i = 0; i < 4; i++) {
@@ -155,7 +163,7 @@ public class BotPacman : MonoBehaviour {
 			}
 		}
 
-		print ("going in direction: " + moveDir);
+		//print ("going in direction: " + moveDir);
 
 	}
 
