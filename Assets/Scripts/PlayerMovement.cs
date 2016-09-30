@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour {
     private bool isMoving = false;
 
     private string direction = "right";
+    public string horizontalName = "Horizontal";
+    public string verticalName = "Vertical";
+
 
     public void FindStartPoint()
     {
@@ -24,14 +27,22 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     currentX = x;
                     currentY = y;
-                    transform.position = new Vector3(x + 0.5f, y + 0.5f, 0.1f);
+                    transform.position = new Vector3(x + 0.5f, y + 0.5f, -0.1f);
                     return;
                 }
             }
         }
         startPoint = transform.position;
     }
-
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Coin")
+        {
+            other.gameObject.SetActive(false);
+            Scores.player1Score += 1;
+            Scores.coinsLeft -= 1;
+        }
+    }
     void Update()
     {
         if (isMoving)
@@ -44,7 +55,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             
         }
-        int hInput = (int)Input.GetAxisRaw("Horizontal");
+        int hInput = (int)Input.GetAxisRaw(horizontalName);
         if(hInput == 1)
         {
             direction = "right";
@@ -52,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             direction = "left";
         }
-        int vInput = (int)Input.GetAxisRaw("Vertical");
+        int vInput = (int)Input.GetAxisRaw(verticalName);
         if(vInput == 1)
         {
             direction = "up";
