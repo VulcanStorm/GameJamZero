@@ -64,7 +64,7 @@ public class BotPacman : MonoBehaviour {
 			// set the new move direction
 			moveVect = targetPos - lastPos;
 			// reset the lerp timer
-			moveTimer -=tileMoveTime;
+			moveTimer =0;
 
 		}
 		percentDist = (moveTimer / tileMoveTime);

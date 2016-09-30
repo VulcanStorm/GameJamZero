@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour {
             return true;
         }else if(MapGeneration.tileMap[x][y] == 4)
         {
-            MapGeneration.singleton.ToggleGates();
+            //MapGeneration.singleton.ToggleGates();
             return true;
         }
         else
