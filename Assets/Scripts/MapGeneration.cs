@@ -15,7 +15,7 @@ public class MapGeneration : MonoBehaviour {
     public int width = 12;
     public int height = 12;
     public GameObject tilePrefab;
-    public GameObject playerObject;
+    public GameObject[] playerObject;
     public Tile[] tiles;
     public Texture2D mapImage;
 
@@ -24,7 +24,9 @@ public class MapGeneration : MonoBehaviour {
     public Sprite openGate;
     public Sprite closedGate;
     public GameObject gateToggleObject;
+    public GameObject coinPrefab;
 
+    Color32[] pixels;
     public List<Transform> tileTransforms;
     public static MapGeneration singleton;
     void Awake()
@@ -33,6 +35,9 @@ public class MapGeneration : MonoBehaviour {
     }
     void Start()
     {
+        pixels = mapImage.GetPixels32();
+        height = mapImage.height;
+        width = mapImage.width;
         tileTransforms = new List<Transform>();
         tileMap = new int[width][];
         for(int i = 0; i < width; i++)
@@ -45,9 +50,6 @@ public class MapGeneration : MonoBehaviour {
     }
     void ReadFromImage()
     {
-        Color32[] pixels = mapImage.GetPixels32();
-        height = mapImage.height;
-        width = mapImage.width;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -55,7 +57,10 @@ public class MapGeneration : MonoBehaviour {
                 DrawTiles(0, i, j, pixels[j * height + i], true);
             }
         }
-        playerObject.GetComponent<PlayerMovement>().FindStartPoint();
+        foreach (GameObject p in playerObject)
+        {
+            p.GetComponent<PlayerMovement>().FindStartPoint();
+        }
 
     }
     void CreateMap()
@@ -87,7 +92,7 @@ public class MapGeneration : MonoBehaviour {
 
             }
         }
-        playerObject.GetComponent<PlayerMovement>().FindStartPoint();
+        //playerObject.GetComponent<PlayerMovement>().FindStartPoint();
     }
     void DrawTiles(int tileType, int x, int y, Color32 pixelColour, bool usingColors = false)
     {
@@ -103,6 +108,11 @@ public class MapGeneration : MonoBehaviour {
                     newTile.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
                     tileTransforms.Add(newTile.transform);
                     newTile.GetComponent<SpriteRenderer>().sprite = t.texture;
+                    if (t.number == 0)
+                    {
+                        Instantiate(coinPrefab, new Vector3(newTile.transform.position.x, newTile.transform.position.y, -0.1f), Quaternion.identity);
+                        Scores.coinsLeft += 1;
+                    }
                     if (t.number == 4)
                     {
                         Instantiate(gateToggleObject, new Vector3(newTile.transform.position.x, newTile.transform.position.y, -0.1f), Quaternion.identity);
