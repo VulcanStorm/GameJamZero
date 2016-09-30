@@ -132,7 +132,7 @@ MonoBehaviour:
       serializedVersion: 2
       rgba: 4278190080
     texture: {fileID: 21300002, guid: dd80b321d9a89ea48b662992d51db655, type: 3}
-  mapImage: {fileID: 2800000, guid: ed003b828f206f04f9a7b1785bb70dfc, type: 3}
+  mapImage: {fileID: 2800000, guid: e15c029b02de7dc499961ec9473bfae4, type: 3}
 --- !u!4 &73531998
 Transform:
   m_ObjectHideFlags: 0
@@ -407,10 +407,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1386752857}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 6, y: 6, z: 6}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 6, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
