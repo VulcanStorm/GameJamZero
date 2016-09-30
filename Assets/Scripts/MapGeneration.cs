@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 
 [System.Serializable]
@@ -21,6 +21,11 @@ public class MapGeneration : MonoBehaviour {
 
     public static int[][] tileMap;
 
+    public Sprite openGate;
+    public Sprite closedGate;
+    public GameObject gateToggleObject;
+
+    public List<Transform> tileTransforms;
     public static MapGeneration singleton;
     void Awake()
     {
@@ -28,12 +33,14 @@ public class MapGeneration : MonoBehaviour {
     }
     void Start()
     {
+        tileTransforms = new List<Transform>();
         tileMap = new int[width][];
         for(int i = 0; i < width; i++)
         {
             tileMap[i] = new int[height];
         }
         ReadFromImage();
+        SetGateOrientation();
         //CreateMap();
     }
     void ReadFromImage()
@@ -92,9 +99,15 @@ public class MapGeneration : MonoBehaviour {
                 {
                     tileMap[x][y] = t.number;
 
-                    Instantiate(tilePrefab);
-                    tilePrefab.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
-                    tilePrefab.GetComponent<SpriteRenderer>().sprite = t.texture;
+                    GameObject newTile = (GameObject)Instantiate(tilePrefab);
+                    newTile.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
+                    tileTransforms.Add(newTile.transform);
+                    newTile.GetComponent<SpriteRenderer>().sprite = t.texture;
+                    if (t.number == 4)
+                    {
+                        Instantiate(gateToggleObject, new Vector3(newTile.transform.position.x, newTile.transform.position.y, -0.1f), Quaternion.identity);
+                    }
+                    
                 }
             }
         }
@@ -104,9 +117,44 @@ public class MapGeneration : MonoBehaviour {
             {
                 if (t.number == tileType)
                 {
-                    Instantiate(tilePrefab);
-                    tilePrefab.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
+                    GameObject newTile = (GameObject) Instantiate(tilePrefab);
+                    newTile.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
                     tilePrefab.GetComponent<SpriteRenderer>().sprite = t.texture;
+                }
+            }
+        }
+    }
+    void SetGateOrientation()
+    {
+        for(int x = 0; x < width; x++)
+        {
+            for(int y = 0; y < height; y++)
+            {
+                if(tileMap[x][y] == 2 || tileMap[x][y] == 3)
+                {
+                    if(tileMap[x][y+1] == 1 && tileMap[x][y - 1] == 1)
+                    {
+                        tileTransforms[(x * width) + y].Rotate(new Vector3(0, 0, 90));
+                    }
+                }
+            }
+        }
+    }
+
+    public void ToggleGates()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if(tileMap[x][y] == 2)
+                {
+                    tileMap[x][y] = 3;
+                    tileTransforms[(x * width) + y].GetComponent<SpriteRenderer>().sprite = closedGate;
+                }else if(tileMap[x][y] == 3)
+                {
+                    tileMap[x][y] = 2;
+                    tileTransforms[(x * width) + y].GetComponent<SpriteRenderer>().sprite = openGate;
                 }
             }
         }

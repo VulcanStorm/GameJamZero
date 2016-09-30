@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (isMoving)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f), 0.1f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f), 0.05f);
             if (Mathf.Abs(transform.position.x - (currentX +0.5f)) <0.2f && Mathf.Abs(transform.position.y - (currentY+0.5f)) < 0.2f)
             {
                 transform.position = new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f);
@@ -117,11 +117,16 @@ public class PlayerMovement : MonoBehaviour {
 	
     bool CheckForObstruction(int x, int y)
     {
-        if (MapGeneration.tileMap[x][y] == 0)
+        if (MapGeneration.tileMap[x][y] == 0 || MapGeneration.tileMap[x][y] == 2)
         {
 
             return true;
-        }else
+        }else if(MapGeneration.tileMap[x][y] == 4)
+        {
+            MapGeneration.singleton.ToggleGates();
+            return true;
+        }
+        else
         {
 
             return false;
