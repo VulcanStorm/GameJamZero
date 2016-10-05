@@ -39,15 +39,23 @@ public class PlayerMovement : MonoBehaviour {
         if (other.tag == "Coin")
         {
             other.gameObject.SetActive(false);
-            Scores.player1Score += 1;
-            Scores.coinsLeft -= 1;
+
+            if (gameObject.name == "Player1")
+            {
+                Scores.player1Score += 1;
+                Scores.coinsLeft -= 1;
+            }else
+            {
+                Scores.player2Score += 1;
+                Scores.coinsLeft -= 1;
+            }
         }
     }
     void Update()
     {
         if (isMoving)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f), 0.05f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f), 10 * Time.deltaTime);
             if (Mathf.Abs(transform.position.x - (currentX +0.5f)) <0.2f && Mathf.Abs(transform.position.y - (currentY+0.5f)) < 0.2f)
             {
                 transform.position = new Vector3(currentX + 0.5f, currentY + 0.5f, 0.1f);
