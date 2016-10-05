@@ -36,21 +36,18 @@ public class PlayerMovement : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Coin")
-        {
-            other.gameObject.SetActive(false);
-
-            if (gameObject.name == "Player1")
-            {
-                Scores.player1Score += 1;
-                Scores.coinsLeft -= 1;
-            }else
-            {
-                Scores.player2Score += 1;
-                Scores.coinsLeft -= 1;
-            }
-        }
+		if (other.tag == "Coin") {
+			other.gameObject.SetActive (false);
+			if (gameObject.name == "Player1") {
+				Scores.player1Score += 1;
+				Scores.coinsLeft -= 1;
+			} else {
+				Scores.player2Score += 1;
+				Scores.coinsLeft -= 1;
+			}
+		}
     }
+
     void Update()
     {
         if (isMoving)
@@ -142,7 +139,7 @@ public class PlayerMovement : MonoBehaviour {
             return true;
         }else if(MapGeneration.tileMap[x][y] == 4)
         {
-            //MapGeneration.singleton.ToggleGates();
+            MapGeneration.singleton.ToggleGates();
             return true;
         }
         else

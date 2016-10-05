@@ -46,6 +46,43 @@ public class GhostPlayer : MonoBehaviour {
 		dirVects [3] = Vector3.left;
 	}
 
+	public void FindStartPoint()
+	{/*
+		for(int x = 0; x < map.width; x++)
+		{
+			for (int y = 0; y < map.height; y++)
+			{
+				if (MapGeneration.tileMap[x][y] == 0)
+				{
+					currentX = x;
+					currentY = y;
+					transform.position = new Vector3(x + 0.5f, y + 0.5f, -0.1f);
+					return;
+				}
+			}
+		}
+		startPoint = transform.position;
+		*/
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Coin")
+		{
+			other.gameObject.SetActive(false);
+
+			if (gameObject.name == "Player1")
+			{
+				Scores.player1Score += 1;
+				Scores.coinsLeft -= 1;
+			}else
+			{
+				Scores.player2Score += 1;
+				Scores.coinsLeft -= 1;
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 

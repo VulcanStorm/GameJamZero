@@ -71,6 +71,17 @@ public class BotPacman : MonoBehaviour {
 		thisTransform.position = offset+Vector3.Lerp (lastPos, targetPos, percentDist);
 	}
 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player") {
+			if (other.gameObject.name == "Player1") {
+				Scores.player1Score -= 5;
+			} else {
+				Scores.player2Score -= 5;
+			}
+		}
+	}
+
 	int GetNodeTypeAtPosition (Vector3 pos){
 		if (pos.x < 0 || pos.x >= MapGeneration.singleton.width) {
 			return 0;
@@ -151,12 +162,14 @@ public class BotPacman : MonoBehaviour {
 			// pick a random direction
 			dirs [(moveDir+2)%4] = false;
 			// currently just picks the first available direction
+			int randomDir = Random.Range(0,4);
 			for (int i = 0; i < 4; i++) {
-				if (dirs [i] == true) {
+				int dirNum = (i + randomDir) % 4;
+				if (dirs [dirNum] == true) {
 					// record the target direction
-					moveDir = i;
+					moveDir = dirNum;
 					// set the target
-					targetPos = lastPos + dirVects [i];
+					targetPos = lastPos + dirVects [dirNum];
 					// stop the loop
 					i = 4;
 				}
